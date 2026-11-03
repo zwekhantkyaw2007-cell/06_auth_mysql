@@ -28,37 +28,75 @@ export default function RegisterPage() {
     }
   };
 
-  return (
-    <div className="auth-box">
-      <h1>Register</h1>
-      <form onSubmit={handleRegister}>
-        <input
-          value={fullname}
-          onChange={(event) => setFullname(event.target.value)}
-          placeholder="Full name"
-          required
-        />
-        <input
-          type="email"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-          placeholder="Email"
-          required
-        />
-        <input
-          type="password"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-          placeholder="Password"
-          minLength={6}
-          required
-        />
-        <button type="submit">Register</button>
+
+return (
+  <main className="auth-page">
+    <div className="login-card">
+      <div className="login-header">
+        <div className="login-icon">✨</div>
+        <h1>Create Account</h1>
+        <p>Register to get started with AuthPortal</p>
+      </div>
+
+      <form onSubmit={handleRegister} className="login-form">
+        <div className="form-group">
+          <label htmlFor="fullname">Full Name</label>
+          <input
+            id="fullname"
+            type="text"
+            placeholder="Enter your full name"
+            value={fullname}
+            onChange={(e) => setFullname(e.target.value)}
+            autoComplete="name"
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="email">Email Address</label>
+          <input
+            id="email"
+            type="email"
+            placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            autoComplete="email"
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="password">Password</label>
+          <input
+            id="password"
+            type="password"
+            placeholder="Create a password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            autoComplete="new-password"
+            required
+          />
+        </div>
+
+        {message && (
+          <p className="login-error" role="alert">
+            {message}
+          </p>
+        )}
+
+        <button type="submit" className="login-button">
+          Create Account
+        </button>
       </form>
-      {message && <p className="error">{message}</p>}
-      <p>
-        Already have an account? <Link href="/login">Login</Link>
+
+      <p className="register-text">
+        Already have an account?{" "}
+        <Link href="/login">Sign In</Link>
       </p>
+
+      <div className="login-footer">
+        <Link href="/">← Back to Home</Link>
+      </div>
     </div>
-  );
-}
+  </main>
+);
