@@ -29,7 +29,7 @@ export default function Home() {
 
         <div className="actions">
           <Link href="/register" className="primary">
-            Get Started
+            Register
           </Link>
           <Link href="/login" className="secondary">
             Login
