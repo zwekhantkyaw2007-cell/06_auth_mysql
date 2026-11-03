@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -7,49 +8,94 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  // send the email and password; on success the API sets the token cookie
   const handleLogin = async (event) => {
     event.preventDefault();
-    const response = await fetch("/api/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
-    const data = await response.json();
+    setMessage("");
+    setLoading(true);
 
-    if (response.ok) {
-      // full page load so proxy.js checks the cookie just received
-      window.location.href = "/dashboard";
-    } else {
-      setMessage(data.message); // e.g. "Invalid email or password"
+    try {
+      const response = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        window.location.href = "/dashboard";
+      } else {
+        setMessage(data.message || "Login failed.");
+      }
+    } catch (error) {
+      setMessage("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="auth-box">
-      <h1>Login</h1>
-      <form onSubmit={handleLogin}>
-        <input
-          type="email"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-          placeholder="Email"
-          required
-        />
-        <input
-          type="password"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-          placeholder="Password"
-          required
-        />
-        <button type="submit">Login</button>
-      </form>
-      {message && <p className="error">{message}</p>}
-      <p>
-        No account yet? <Link href="/register">Register</Link>
-      </p>
-    </div>
+    <main className="auth-page">
+      <div className="login-card">
+        <div className="login-header">
+          <div className="login-icon">🔐</div>
+          <h1>Welcome Back</h1>
+          <p>Sign in to access your dashboard</p>
+        </div>
+
+        <form onSubmit={handleLogin} className="login-form">
+          <div className="form-group">
+            <label htmlFor="email">Email Address</label>
+            <input
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter your email"
+              autoComplete="email"
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <input
+              id="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter your password"
+              autoComplete="current-password"
+              required
+            />
+          </div>
+
+          {message && (
+            <p className="login-error" role="alert">
+              {message}
+            </p>
+          )}
+
+          <button
+            type="submit"
+            className="login-button"
+            disabled={loading}
+          >
+            {loading ? "Signing in..." : "Sign In"}
+          </button>
+        </form>
+
+        <p className="register-text">
+          Don't have an account?{" "}
+          <Link href="/register">Create Account</Link>
+        </p>
+
+        <div className="login-footer">
+          <Link href="/">← Back to Home</Link>
+        </div>
+      </div>
+    </main>
   );
 }
