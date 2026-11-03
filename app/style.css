@@ -1,42 +1,92 @@
-/* app/style.css — basic styles shared by the auth pages */
+
+* {
+  box-sizing: border-box;
+}
+
 body {
-  font-family: sans-serif;
-  padding: 20px;
-  background: #f5f6f8;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0f172a;
+  color: white;
 }
 
-/* centered white box, used on every page */
-.auth-box {
-  max-width: 360px;
-  margin: 40px auto;
-  padding: 24px;
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-}
-
-form {
+.navbar {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 8%;
+  border-bottom: 1px solid #334155;
 }
 
-input,
-button {
-  padding: 10px;
-  font: inherit;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+.navlinks, .actions {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
 }
 
-button {
-  background: #00758f;
-  border-color: #00758f;
-  color: #fff;
-  cursor: pointer;
+a {
+  color: inherit;
+  text-decoration: none;
 }
 
-/* error message below the form */
-.error {
-  color: #c0392b;
+.hero {
+  max-width: 650px;
+  margin: 70px auto;
+  padding: 24px;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: clamp(32px, 6vw, 48px);
+  margin-bottom: 15px;
+}
+
+.hero > p {
+  color: #cbd5e1;
+  line-height: 1.7;
+}
+
+.tag {
+  color: #60a5fa;
+  font-weight: bold;
+}
+
+.profile {
+  margin: 35px 0;
+  padding: 25px;
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 16px;
+}
+
+.profile p {
+  color: #cbd5e1;
+}
+
+.actions {
+  justify-content: center;
+}
+
+.primary, .secondary {
+  padding: 13px 25px;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.primary {
+  background: #2563eb;
+}
+
+.secondary {
+  border: 1px solid #64748b;
+}
+
+@media (max-width: 600px) {
+  .navbar {
+    padding: 18px;
+  }
+
+  .hero {
+    margin: 35px auto;
+  }
 }
